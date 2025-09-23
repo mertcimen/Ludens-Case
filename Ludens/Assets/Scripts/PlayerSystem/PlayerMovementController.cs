@@ -50,6 +50,9 @@ namespace PlayerSystem
 
 			transform.position = targetPosition;
 			moveRoutine = null;
+			
+			yield return null;
+			player.SetState(PlayerState.Idle);
 		}
 
 		public bool IsMoving()
