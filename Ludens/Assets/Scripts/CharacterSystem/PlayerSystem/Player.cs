@@ -1,3 +1,4 @@
+using CharacterSystem;
 using Containers;
 using Scriptables;
 using UnityEngine;
@@ -5,26 +6,23 @@ using UnityEngine.Events;
 
 namespace PlayerSystem
 {
-	public class Player : MonoBehaviour
+	public class Player : CharacterBase
 	{
 		public static Player Instance { get; private set; }
-
-		[SerializeField] private PlayerDataSO stats; 
-
-		public PlayerDataSO Stats => stats; 
 
 		public PlayerState State { get; private set; } = PlayerState.Idle;
 		public event UnityAction OnStateChanged;
 
-		private Health health;
 		public PlayerMovementController MovementController { get; private set; }
 		public PlayerAttackController AttackController { get; private set; }
 
 		public bool IsMoving => State == PlayerState.Moving;
 		public bool IsAttacking => State == PlayerState.Attacking;
 
-		private void Awake()
+		protected override void Awake()
 		{
+			base.Awake();
+
 			if (Instance != null && Instance != this)
 			{
 				Destroy(gameObject);
@@ -39,10 +37,8 @@ namespace PlayerSystem
 			if (AttackController) AttackController.Initialize(this);
 			if (MovementController) MovementController.Initialize(this);
 
-			health = GetComponent<Health>();
-			health.Initialize(this); 
-			health.OnHealthChanged += UpdateUI;
-			health.OnDied += OnPlayerDied;
+			OnHealthChanged += UpdateUI;
+			OnDied += OnPlayerDied;
 		}
 
 		public void SetState(PlayerState newState)
@@ -51,17 +47,14 @@ namespace PlayerSystem
 			OnStateChanged?.Invoke();
 		}
 
-		public void TakeDamage(int amount)
-		{
-			health.TakeDamage(amount);
-		}
-
 		private void UpdateUI(int currentHealth)
 		{
+			// UI güncellemesi burada yapılır
 		}
 
 		private void OnPlayerDied()
 		{
+			// Player özel ölüm davranışı
 		}
 	}
 }

@@ -2,8 +2,8 @@ using UnityEngine;
 
 namespace Scriptables
 {
-	[CreateAssetMenu(fileName = "PlayerData", menuName = "Game/Player Data", order = 0)]
-	public class PlayerDataSO : ScriptableObject
+	[CreateAssetMenu(fileName = "CharacterStats", menuName = "Game/Character Stats", order = 0)]
+	public class CharacterStatsSO : ScriptableObject
 	{
 		[Header("Health")]
 		public int maxHealth = 100;
@@ -16,7 +16,8 @@ namespace Scriptables
 		public float attackRange = 5f;
 		public float attackRate = 1f;
 		public int damage = 10;
-		
+
+		[Header("Bullet")]
 		public float bulletSpeed = 10f;
 		public float bulletLifeTime = 3f;
 	}

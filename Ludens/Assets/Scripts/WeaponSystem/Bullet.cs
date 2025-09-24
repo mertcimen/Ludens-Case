@@ -1,5 +1,5 @@
 using System.Collections;
-using EnemySystem;
+using CharacterSystem.EnemySystem;
 using Scriptables;
 using UnityEngine;
 using Utilities;
@@ -17,7 +17,7 @@ namespace WeaponSystem
 
 		private Coroutine lifeRoutine;
 
-		public void Initialize(Transform target, string poolTag, int damage, PlayerDataSO stats)
+		public void Initialize(Transform target, string poolTag, int damage, CharacterStatsSO stats)
 		{
 			this.poolTag = poolTag;
 			this.damage = damage;
@@ -51,9 +51,10 @@ namespace WeaponSystem
 
 		private void OnTriggerEnter2D(Collider2D collision)
 		{
-			if (collision.TryGetComponent<Enemy>(out var enemy))
+			if (collision.TryGetComponent<CharacterSystem.CharacterBase>(out var character))
 			{
-				enemy.TakeDamage(damage);
+				character.TakeDamage(damage);
+
 				if (lifeRoutine != null)
 					StopCoroutine(lifeRoutine);
 
