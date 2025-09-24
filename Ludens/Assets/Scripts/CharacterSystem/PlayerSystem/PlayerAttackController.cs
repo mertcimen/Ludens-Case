@@ -95,7 +95,7 @@ namespace CharacterSystem.PlayerSystem
 
 		private void OnDrawGizmosSelected()
 		{
-			Gizmos.color = Color.red;
+			Gizmos.color = Color.green;
 			Gizmos.DrawWireSphere(transform.position, attackRange);
 		}
 	}

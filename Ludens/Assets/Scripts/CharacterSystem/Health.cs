@@ -27,6 +27,8 @@ namespace CharacterSystem
 				OnDied?.Invoke();
 		}
 
+		
+
 		public void Heal(int amount)
 		{
 			CurrentHealth = Math.Min(CurrentHealth + amount, MaxHealth);

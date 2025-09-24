@@ -8,14 +8,17 @@ namespace CharacterSystem.EnemySystem
 	public class EnemyMovementController : MonoBehaviour
 	{
 		private Enemy enemy;
-
 		private float moveSpeed;
 		private float rotationSpeed;
-
 		private Player player;
-		private Coroutine moveRoutine;
 
-		public void Initialize(Enemy enemy)
+		
+		public float MoveSpeed => moveSpeed;
+		public float RotationSpeed => rotationSpeed;
+		public Enemy Enemy => enemy;
+		public int IndexInManager { get; set; }
+
+		public void Initialize(Enemy enemy, int indexInManager)
 		{
 			this.enemy = enemy;
 			var stats = enemy.Stats;
@@ -23,40 +26,11 @@ namespace CharacterSystem.EnemySystem
 			this.rotationSpeed = stats.rotationSpeed;
 			player = Player.Instance;
 
-			SetTargetPosition(player.transform.position);
-		}
+			IndexInManager = indexInManager;
 
-		public void SetTargetPosition(Vector2 position)
-		{
-			if (moveRoutine != null) StopCoroutine(moveRoutine);
-			moveRoutine = StartCoroutine(MoveToPosition());
-		}
-
-		private IEnumerator MoveToPosition()
-		{
 			enemy.SetState(CharacterState.Moving);
-
-			while ((targetPosition - (Vector2)transform.position).sqrMagnitude > 0.0025f)
-			{
-				Vector2 currentPosition = transform.position;
-				Vector2 direction = (targetPosition - currentPosition).normalized;
-
-				transform.position = Vector2.MoveTowards(currentPosition, targetPosition, moveSpeed * Time.deltaTime);
-
-				if (direction.sqrMagnitude > 0.001f)
-				{
-					float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90f;
-					Quaternion targetRotation = Quaternion.Euler(0, 0, angle);
-					transform.rotation =
-						Quaternion.Lerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
-				}
-
-				yield return null;
-			}
-
-			transform.position = targetPosition;
-			moveRoutine = null;
-			enemy.SetState(CharacterState.Idle);
 		}
+
+		
 	}
 }
