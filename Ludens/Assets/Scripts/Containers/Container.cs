@@ -6,7 +6,7 @@ namespace Containers
 	}
 	
 
-	public enum PlayerState
+	public enum CharacterState
 	{
 		Idle,
 		Moving,

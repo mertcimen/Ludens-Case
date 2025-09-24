@@ -1,35 +1,40 @@
 using System.Collections;
+using CharacterSystem.PlayerSystem;
 using Containers;
 using UnityEngine;
 
-namespace CharacterSystem.PlayerSystem
+namespace CharacterSystem.EnemySystem
 {
-	public class PlayerMovementController : MonoBehaviour
+	public class EnemyMovementController : MonoBehaviour
 	{
-		private Player player;
-		private Coroutine moveRoutine;
+		private Enemy enemy;
 
-		// cached stats
 		private float moveSpeed;
 		private float rotationSpeed;
 
-		public void Initialize(Player player)
+		private Player player;
+		private Coroutine moveRoutine;
+
+		public void Initialize(Enemy enemy)
 		{
-			this.player = player;
-			var stats = player.Stats;
-			moveSpeed = stats.moveSpeed;
-			rotationSpeed = stats.rotationSpeed;
+			this.enemy = enemy;
+			var stats = enemy.Stats;
+			this.moveSpeed = stats.moveSpeed;
+			this.rotationSpeed = stats.rotationSpeed;
+			player = Player.Instance;
+
+			SetTargetPosition(player.transform.position);
 		}
 
 		public void SetTargetPosition(Vector2 position)
 		{
 			if (moveRoutine != null) StopCoroutine(moveRoutine);
-			moveRoutine = StartCoroutine(MoveToPosition(position));
+			moveRoutine = StartCoroutine(MoveToPosition());
 		}
 
-		private IEnumerator MoveToPosition(Vector2 targetPosition)
+		private IEnumerator MoveToPosition()
 		{
-			player.SetState(CharacterState.Moving);
+			enemy.SetState(CharacterState.Moving);
 
 			while ((targetPosition - (Vector2)transform.position).sqrMagnitude > 0.0025f)
 			{
@@ -51,7 +56,7 @@ namespace CharacterSystem.PlayerSystem
 
 			transform.position = targetPosition;
 			moveRoutine = null;
-			player.SetState(CharacterState.Idle);
+			enemy.SetState(CharacterState.Idle);
 		}
 	}
 }

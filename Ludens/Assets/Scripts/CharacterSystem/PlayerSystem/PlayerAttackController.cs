@@ -4,7 +4,7 @@ using UnityEngine;
 using Utilities;
 using WeaponSystem;
 
-namespace PlayerSystem
+namespace CharacterSystem.PlayerSystem
 {
 	public class PlayerAttackController : MonoBehaviour
 	{
@@ -32,7 +32,7 @@ namespace PlayerSystem
 
 		private void HandleStateChanged()
 		{
-			if (player.State == PlayerState.Idle)
+			if (player.State == CharacterState.Idle)
 			{
 				if (attackRoutine == null)
 					attackRoutine = StartCoroutine(AttackLoop());
@@ -51,7 +51,7 @@ namespace PlayerSystem
 		{
 			WaitForSeconds waitCheck = new WaitForSeconds(0.2f);
 
-			while (player.State == PlayerState.Idle)
+			while (player.State == CharacterState.Idle)
 			{
 				currentTarget = FindClosestEnemyInRange();
 

@@ -1,3 +1,4 @@
+using Containers;
 using Scriptables;
 using UnityEngine;
 using UnityEngine.Events;
@@ -14,6 +15,12 @@ namespace CharacterSystem
 		public UnityAction OnDied;
 		public UnityAction<int> OnHealthChanged;
 
+		public CharacterState State { get; protected set; } = CharacterState.Idle;
+		public event UnityAction OnStateChanged;
+		
+		public int CurrentHealth => health.CurrentHealth;
+		public int MaxHealth => health.MaxHealth;
+		
 		protected virtual void Awake()
 		{
 			health = new Health(stats.maxHealth);
@@ -21,6 +28,13 @@ namespace CharacterSystem
 			health.OnDied += HandleDeath;
 		}
 
+		public void SetState(CharacterState newState)
+		{
+			State = newState;
+			OnStateChanged?.Invoke();
+		}
+
+		
 		public virtual void TakeDamage(int amount)
 		{
 			health.TakeDamage(amount);
@@ -29,11 +43,9 @@ namespace CharacterSystem
 		protected virtual void HandleDeath()
 		{
 			OnDied?.Invoke();
-			// Default behavior: disable object
 			gameObject.SetActive(false);
 		}
 
-		public int CurrentHealth => health.CurrentHealth;
-		public int MaxHealth => health.MaxHealth;
+		
 	}
 }

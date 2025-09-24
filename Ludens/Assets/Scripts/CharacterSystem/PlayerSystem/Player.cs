@@ -1,23 +1,18 @@
-using CharacterSystem;
 using Containers;
-using Scriptables;
 using UnityEngine;
-using UnityEngine.Events;
 
-namespace PlayerSystem
+namespace CharacterSystem.PlayerSystem
 {
+	[DefaultExecutionOrder(-1)]
 	public class Player : CharacterBase
 	{
 		public static Player Instance { get; private set; }
 
-		public PlayerState State { get; private set; } = PlayerState.Idle;
-		public event UnityAction OnStateChanged;
-
 		public PlayerMovementController MovementController { get; private set; }
 		public PlayerAttackController AttackController { get; private set; }
 
-		public bool IsMoving => State == PlayerState.Moving;
-		public bool IsAttacking => State == PlayerState.Attacking;
+		public bool IsMoving => State == CharacterState.Moving;
+		public bool IsAttacking => State == CharacterState.Attacking;
 
 		protected override void Awake()
 		{
@@ -41,11 +36,11 @@ namespace PlayerSystem
 			OnDied += OnPlayerDied;
 		}
 
-		public void SetState(PlayerState newState)
-		{
-			State = newState;
-			OnStateChanged?.Invoke();
-		}
+		// public void SetState(CharacterState newState)
+		// {
+		// 	State = newState;
+		// 	OnStateChanged?.Invoke();
+		// }
 
 		private void UpdateUI(int currentHealth)
 		{
