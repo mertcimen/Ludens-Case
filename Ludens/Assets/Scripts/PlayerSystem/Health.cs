@@ -5,8 +5,9 @@ namespace PlayerSystem
 {
 	public class Health : MonoBehaviour
 	{
-		[SerializeField] private int maxHealth = 100;
+		private Player player;
 		private int currentHealth;
+		private int maxHealth;
 
 		public int CurrentHealth => currentHealth;
 		public int MaxHealth => maxHealth;
@@ -14,8 +15,10 @@ namespace PlayerSystem
 		public UnityAction<int> OnHealthChanged;
 		public UnityAction OnDied;
 
-		private void Awake()
+		public void Initialize(Player player)
 		{
+			this.player = player;
+			maxHealth = player.Stats.maxHealth; // cache
 			currentHealth = maxHealth;
 		}
 
@@ -27,9 +30,7 @@ namespace PlayerSystem
 			OnHealthChanged?.Invoke(currentHealth);
 
 			if (currentHealth <= 0)
-			{
-				Die();
-			}
+				OnDied?.Invoke();
 		}
 
 		public void Heal(int amount)
@@ -37,11 +38,6 @@ namespace PlayerSystem
 			currentHealth += amount;
 			currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
 			OnHealthChanged?.Invoke(currentHealth);
-		}
-
-		private void Die()
-		{
-			OnDied?.Invoke();
 		}
 	}
 }

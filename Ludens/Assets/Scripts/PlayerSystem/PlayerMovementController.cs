@@ -7,30 +7,31 @@ namespace PlayerSystem
 	public class PlayerMovementController : MonoBehaviour
 	{
 		private Player player;
-		[SerializeField] private float moveSpeed = 5f;
-		[SerializeField] private float rotationSpeed = 10f;
-
 		private Coroutine moveRoutine;
+
+		// cached stats
+		private float moveSpeed;
+		private float rotationSpeed;
 
 		public void Initialize(Player player)
 		{
 			this.player = player;
+			var stats = player.Stats;
+			moveSpeed = stats.moveSpeed;
+			rotationSpeed = stats.rotationSpeed;
 		}
 
 		public void SetTargetPosition(Vector2 position)
 		{
-			if (moveRoutine != null)
-			{
-				StopCoroutine(moveRoutine);
-			}
-
+			if (moveRoutine != null) StopCoroutine(moveRoutine);
 			moveRoutine = StartCoroutine(MoveToPosition(position));
 		}
 
 		private IEnumerator MoveToPosition(Vector2 targetPosition)
 		{
 			player.SetState(PlayerState.Moving);
-			while ((targetPosition - (Vector2)transform.position).sqrMagnitude > 0.05f * 0.05f)
+
+			while ((targetPosition - (Vector2)transform.position).sqrMagnitude > 0.0025f)
 			{
 				Vector2 currentPosition = transform.position;
 				Vector2 direction = (targetPosition - currentPosition).normalized;
@@ -50,14 +51,7 @@ namespace PlayerSystem
 
 			transform.position = targetPosition;
 			moveRoutine = null;
-			
-			yield return null;
 			player.SetState(PlayerState.Idle);
-		}
-
-		public bool IsMoving()
-		{
-			return moveRoutine != null;
 		}
 	}
 }

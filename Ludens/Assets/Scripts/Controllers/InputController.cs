@@ -1,3 +1,4 @@
+using Containers;
 using UnityEngine;
 using PlayerSystem;
 
@@ -19,6 +20,9 @@ namespace Controllers
 		{
 			if (Input.GetMouseButtonDown(0))
 			{
+				if (_player.State == PlayerState.Dead) return;
+				
+				
 				Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 				Vector2 targetPos = new Vector2(mouseWorldPos.x, mouseWorldPos.y);
 

@@ -1,4 +1,6 @@
+using System.Collections;
 using EnemySystem;
+using Scriptables;
 using UnityEngine;
 using Utilities;
 
@@ -6,41 +8,62 @@ namespace WeaponSystem
 {
 	public class Bullet : MonoBehaviour
 	{
-		[SerializeField] private float speed = 10f;
-		[SerializeField] private float lifeTime = 3f;
 		private Vector3 direction;
-		private float timer;
 		private string poolTag;
 
-		public void Initialize(Transform target, string poolTag, int damage)
+		private float speed;
+		private float lifeTime;
+		private int damage;
+
+		private Coroutine lifeRoutine;
+
+		public void Initialize(Transform target, string poolTag, int damage, PlayerDataSO stats)
 		{
 			this.poolTag = poolTag;
-			timer = 0f;
+			this.damage = damage;
+			this.speed = stats.bulletSpeed;
+			this.lifeTime = stats.bulletLifeTime;
 
-			if (target != null)
-				direction = (target.position - transform.position).normalized;
-			else
-				direction = Vector3.zero;
+			direction = target != null ? (target.position - transform.position).normalized : Vector3.zero;
+
+			if (lifeRoutine != null)
+				StopCoroutine(lifeRoutine);
+
+			lifeRoutine = StartCoroutine(LifeCycle());
 		}
 
-		private void Update()
-		{
-			transform.position += direction * speed * Time.deltaTime;
+		WaitForFixedUpdate waitForFixedUpdate = new WaitForFixedUpdate();
 
-			timer += Time.deltaTime;
-			if (timer >= lifeTime)
+		private IEnumerator LifeCycle()
+		{
+			float timer = 0f;
+
+			while (timer < lifeTime)
 			{
-				ObjectPooler.Instance.ReturnToPool(poolTag, gameObject);
+				transform.position += direction * speed * Time.fixedDeltaTime;
+
+				timer += Time.fixedDeltaTime;
+				yield return waitForFixedUpdate;
 			}
+
+			ReturnToPool();
 		}
 
 		private void OnTriggerEnter2D(Collider2D collision)
 		{
 			if (collision.TryGetComponent<Enemy>(out var enemy))
 			{
-				enemy.TakeDamage(100);
-				ObjectPooler.Instance.ReturnToPool(poolTag, gameObject);
+				enemy.TakeDamage(damage);
+				if (lifeRoutine != null)
+					StopCoroutine(lifeRoutine);
+
+				ReturnToPool();
 			}
+		}
+
+		private void ReturnToPool()
+		{
+			ObjectPooler.Instance.ReturnToPool(poolTag, gameObject);
 		}
 	}
 }

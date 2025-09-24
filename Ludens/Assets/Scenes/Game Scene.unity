@@ -155,7 +155,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 223150879dc64b85b51980edad36869d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
 --- !u!114 &231273886
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -340,7 +339,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 223150879dc64b85b51980edad36869d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
 --- !u!114 &266980763
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -525,7 +523,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 223150879dc64b85b51980edad36869d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
 --- !u!114 &393646691
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -671,7 +668,7 @@ Transform:
   m_GameObject: {fileID: 393646689}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.12, y: -2.6100001, z: 0}
+  m_LocalPosition: {x: 4.25, y: -1.64, z: 0}
   m_LocalScale: {x: 0.53154, y: 0.53154, z: 0.53154}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -710,7 +707,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 223150879dc64b85b51980edad36869d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
 --- !u!114 &483671583
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1034,7 +1030,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 223150879dc64b85b51980edad36869d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
 --- !u!114 &516552310
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1109,7 +1104,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 10
+  orthographic size: 15.09
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -1232,8 +1227,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ac1443ab17e4af58662b34c09c19000, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
-  rotationSpeed: 10
 --- !u!114 &705701762
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1246,6 +1239,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 068acd73cfdf48f498397944e8907359, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stats: {fileID: 11400000, guid: 5128e67c296254a89b3857ea0743e9cf, type: 2}
 --- !u!212 &705701763
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1326,10 +1320,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66ce0d0f5d9a4a1e80cc535bb79bd2b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackRange: 6.72
-  attackRate: 2.62
-  damage: 10
-  bulletPrefab: {fileID: 0}
   enemyLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -1345,7 +1335,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 223150879dc64b85b51980edad36869d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
 --- !u!1 &1284271249
 GameObject:
   m_ObjectHideFlags: 0
@@ -1379,7 +1368,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 223150879dc64b85b51980edad36869d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
 --- !u!114 &1284271251
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1564,7 +1552,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 223150879dc64b85b51980edad36869d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
 --- !u!114 &1334186320
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1749,7 +1736,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 223150879dc64b85b51980edad36869d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
 --- !u!114 &1566111813
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1934,7 +1920,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 223150879dc64b85b51980edad36869d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
 --- !u!114 &1631877380
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2119,7 +2104,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 223150879dc64b85b51980edad36869d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
 --- !u!114 &1703322065
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2304,7 +2288,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 223150879dc64b85b51980edad36869d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
 --- !u!114 &1707376281
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2489,7 +2472,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 223150879dc64b85b51980edad36869d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
 --- !u!114 &1753607586
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2674,7 +2656,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 223150879dc64b85b51980edad36869d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
 --- !u!114 &1914698359
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2907,7 +2888,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 223150879dc64b85b51980edad36869d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
 --- !u!114 &2135169166
 MonoBehaviour:
   m_ObjectHideFlags: 0

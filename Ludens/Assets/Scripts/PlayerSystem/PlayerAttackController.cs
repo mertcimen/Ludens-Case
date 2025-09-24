@@ -9,20 +9,24 @@ namespace PlayerSystem
 	public class PlayerAttackController : MonoBehaviour
 	{
 		private Player player;
-
-		[SerializeField] private float attackRange = 5f;
-		[SerializeField] private float attackRate = 1f;
-		[SerializeField] private int damage = 10;
-
-		[SerializeField] private Bullet bulletPrefab;
-		[SerializeField] private LayerMask enemyLayer;
-
 		private Coroutine attackRoutine;
 		private Transform currentTarget;
+
+		[SerializeField] private LayerMask enemyLayer;
+
+		// cached stats
+		private float attackRange;
+		private float attackRate;
+		private int damage;
 
 		public void Initialize(Player player)
 		{
 			this.player = player;
+			var stats = player.Stats;
+			attackRange = stats.attackRange;
+			attackRate = stats.attackRate;
+			damage = stats.damage;
+
 			player.OnStateChanged += HandleStateChanged;
 		}
 
@@ -63,20 +67,11 @@ namespace PlayerSystem
 			}
 		}
 
-		private IEnumerator ShootAtTarget()
-		{
-			while (currentTarget != null && Vector2.Distance(transform.position, currentTarget.position) <= attackRange)
-			{
-				Shoot(currentTarget);
-				yield return new WaitForSeconds(1f / attackRate);
-			}
-		}
-
 		private void Shoot(Transform enemy)
 		{
 			GameObject bulletObj = ObjectPooler.Instance.Spawn("Bullet", transform.position, Quaternion.identity);
 			Bullet bullet = bulletObj.GetComponent<Bullet>();
-			bullet.Initialize(enemy, "Bullet", damage);
+			bullet.Initialize(enemy, "Bullet", damage, player.Stats);
 		}
 
 		private Transform FindClosestEnemyInRange()
@@ -87,7 +82,7 @@ namespace PlayerSystem
 
 			foreach (var hit in hits)
 			{
-				float dist = Vector2.SqrMagnitude(hit.transform.position - transform.position);
+				float dist = (hit.transform.position - transform.position).sqrMagnitude;
 				if (dist < minDist)
 				{
 					minDist = dist;
