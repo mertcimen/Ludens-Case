@@ -2,7 +2,7 @@ using System.Collections;
 using Containers;
 using UnityEngine;
 
-namespace PlayerSystem
+namespace CharacterSystem.PlayerSystem
 {
 	public class PlayerMovementController : MonoBehaviour
 	{
@@ -29,7 +29,7 @@ namespace PlayerSystem
 
 		private IEnumerator MoveToPosition(Vector2 targetPosition)
 		{
-			player.SetState(PlayerState.Moving);
+			player.SetState(CharacterState.Moving);
 
 			while ((targetPosition - (Vector2)transform.position).sqrMagnitude > 0.0025f)
 			{
@@ -51,7 +51,7 @@ namespace PlayerSystem
 
 			transform.position = targetPosition;
 			moveRoutine = null;
-			player.SetState(PlayerState.Idle);
+			player.SetState(CharacterState.Idle);
 		}
 	}
 }
