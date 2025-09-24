@@ -44,7 +44,7 @@ namespace CharacterSystem.PlayerSystem
 
 		private void UpdateUI(int currentHealth)
 		{
-			// UI güncellemesi burada yapılır
+			
 		}
 
 		private void OnPlayerDied()
