@@ -10,6 +10,7 @@ namespace CharacterSystem.PlayerSystem
 
 		public PlayerMovementController MovementController { get; private set; }
 		public PlayerAttackController AttackController { get; private set; }
+		public PlayerHealthUIHandler healthUIHandler { get; private set; }
 
 		public bool IsMoving => State == CharacterState.Moving;
 		public bool IsAttacking => State == CharacterState.Attacking;
@@ -28,11 +29,12 @@ namespace CharacterSystem.PlayerSystem
 
 			MovementController = GetComponent<PlayerMovementController>();
 			AttackController = GetComponent<PlayerAttackController>();
+			healthUIHandler = GetComponent<PlayerHealthUIHandler>();
 
 			if (AttackController) AttackController.Initialize(this);
 			if (MovementController) MovementController.Initialize(this);
+			if (healthUIHandler) healthUIHandler.Initialize(health, transform);
 
-			OnHealthChanged += UpdateUI;
 			OnDied += OnPlayerDied;
 		}
 
@@ -41,11 +43,6 @@ namespace CharacterSystem.PlayerSystem
 		// 	State = newState;
 		// 	OnStateChanged?.Invoke();
 		// }
-
-		private void UpdateUI(int currentHealth)
-		{
-			
-		}
 
 		private void OnPlayerDied()
 		{

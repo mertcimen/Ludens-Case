@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: EnemyData
   m_EditorClassIdentifier: 
   maxHealth: 100
-  moveSpeed: 5
+  moveSpeed: 1
   rotationSpeed: 10
-  attackRange: 5
+  attackRange: 0.5
   attackRate: 4.92
   damage: 10
   bulletSpeed: 10
