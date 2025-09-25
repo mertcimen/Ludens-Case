@@ -12,7 +12,7 @@ namespace Managers
 	public class EnemyManager : MonoBehaviour
 	{
 		public static EnemyManager Instance { get; private set; }
-
+		private List<Enemy> enemies = new List<Enemy>();
 		private List<EnemyMovementController> movementControllers = new List<EnemyMovementController>();
 		private List<EnemyAttackController> attackControllers = new List<EnemyAttackController>();
 
@@ -62,6 +62,7 @@ namespace Managers
 		{
 			movementControllers.Add(movement);
 			attackControllers.Add(attack);
+			enemies.Add(enemy);
 
 			ReallocateNativeArrays();
 
@@ -69,15 +70,22 @@ namespace Managers
 			attack.Initialize(enemy, enemy.Stats.attackRange, enemy.Stats.damage);
 		}
 
-		public void UnregisterEnemy(EnemyMovementController movement, EnemyAttackController attack)
+		public void UnregisterEnemy(EnemyMovementController movement, EnemyAttackController attack, Enemy enemy)
 		{
 			int index = movementControllers.IndexOf(movement);
 			if (index >= 0)
 			{
 				movementControllers.RemoveAt(index);
 				attackControllers.RemoveAt(index);
+				enemies.Remove(enemy);
 
-				ReallocateNativeArrays(); // NativeArray’leri yeniden kur
+				ReallocateNativeArrays();
+				
+				if (enemies.Count == 0 && !isGameOver)
+				{
+					GameManager.Instance.gameStateManager.CurrentState = GameState.Win;
+					Debug.Log("Win");
+				}
 			}
 		}
 

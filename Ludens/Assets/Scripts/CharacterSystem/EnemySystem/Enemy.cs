@@ -32,7 +32,7 @@ namespace CharacterSystem.EnemySystem
 
 		protected override void HandleDeath()
 		{
-			EnemyManager.Instance.UnregisterEnemy(MovementController, AttackController);
+			EnemyManager.Instance.UnregisterEnemy(MovementController, AttackController,this);
 			base.HandleDeath();
 		}
 
