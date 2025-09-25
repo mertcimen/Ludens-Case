@@ -1,5 +1,5 @@
-using CharacterSystem.Managers;
 using Containers;
+using Managers;
 using UnityEngine;
 
 namespace CharacterSystem.PlayerSystem
@@ -11,7 +11,7 @@ namespace CharacterSystem.PlayerSystem
 
 		public PlayerMovementController MovementController { get; private set; }
 		public PlayerAttackController AttackController { get; private set; }
-		public PlayerHealthUIHandler healthUIHandler { get; private set; }
+		public PlayerHealthUIHandler HealthUIHandler { get; private set; }
 
 		public bool IsMoving => State == CharacterState.Moving;
 		public bool IsAttacking => State == CharacterState.Attacking;
@@ -30,11 +30,11 @@ namespace CharacterSystem.PlayerSystem
 
 			MovementController = GetComponent<PlayerMovementController>();
 			AttackController = GetComponent<PlayerAttackController>();
-			healthUIHandler = GetComponent<PlayerHealthUIHandler>();
+			HealthUIHandler = GetComponent<PlayerHealthUIHandler>();
 
 			if (AttackController) AttackController.Initialize(this);
 			if (MovementController) MovementController.Initialize(this);
-			if (healthUIHandler) healthUIHandler.Initialize(health, transform);
+			if (HealthUIHandler) HealthUIHandler.Initialize(health, transform);
 
 			OnDied += OnPlayerDied;
 		}
@@ -47,7 +47,7 @@ namespace CharacterSystem.PlayerSystem
 
 		private void OnPlayerDied()
 		{
-			GameStateManager.Instance.CurrentState = GameState.Lose;
+			GameManager.Instance.gameStateManager.CurrentState = GameState.Lose;
 		}
 	}
 }

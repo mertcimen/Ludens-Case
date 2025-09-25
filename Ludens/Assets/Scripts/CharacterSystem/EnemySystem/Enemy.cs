@@ -1,4 +1,4 @@
-using CharacterSystem.Managers;
+using Managers;
 using Unity.VisualScripting;
 using UnityEngine;
 

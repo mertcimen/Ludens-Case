@@ -1,13 +1,14 @@
 using CharacterSystem.PlayerSystem;
 using Containers;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Controllers
 {
 	public class InputController : MonoBehaviour
 	{
 		private Player _player;
-
+		public event UnityAction OnScreenTouched;
 		private void Start()
 		{
 			if (Player.Instance != null)
@@ -29,8 +30,17 @@ namespace Controllers
 				if (_player != null)
 				{
 					_player.MovementController.SetTargetPosition(targetPos);
+					TriggerOnScreenTouch();
 				}
 			}
 		}
+
+		private void TriggerOnScreenTouch()
+		{
+			OnScreenTouched?.Invoke();		
+			
+			
+		}
+		
 	}
 }

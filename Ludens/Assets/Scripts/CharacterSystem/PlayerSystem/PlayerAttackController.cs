@@ -1,6 +1,8 @@
 using System.Collections;
 using Containers;
 using DG.Tweening;
+using Managers;
+using Unity.VisualScripting;
 using UnityEngine;
 using Utilities;
 using WeaponSystem;
@@ -31,8 +33,14 @@ namespace CharacterSystem.PlayerSystem
 			player.OnStateChanged += HandleStateChanged;
 		}
 
+		private void Start()
+		{
+			HandleStateChanged();
+		}
+
 		private void HandleStateChanged()
 		{
+			if (GameManager.Instance.gameStateManager.CurrentState != GameState.Start) return;
 			if (player.State == CharacterState.Idle)
 			{
 				if (attackRoutine == null)
@@ -60,8 +68,8 @@ namespace CharacterSystem.PlayerSystem
 				{
 					Vector2 dir = (currentTarget.transform.position - transform.position).normalized;
 					float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-					transform.rotation = Quaternion.Euler(0f, 0f, angle-90);
-					
+					transform.rotation = Quaternion.Euler(0f, 0f, angle - 90);
+
 					Shoot(currentTarget);
 
 					yield return new WaitForSeconds(1f / attackRate);

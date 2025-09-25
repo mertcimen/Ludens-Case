@@ -7,7 +7,7 @@ using Unity.Collections;
 using Unity.Jobs;
 using UnityEngine;
 
-namespace CharacterSystem.Managers
+namespace Managers
 {
 	public class EnemyManager : MonoBehaviour
 	{
@@ -27,12 +27,8 @@ namespace CharacterSystem.Managers
 
 		private Player player;
 
-		
-		
-		
 		private bool isGameOver = false;
 
-		
 		private void Awake()
 		{
 			if (Instance != null && Instance != this) Destroy(gameObject);
@@ -44,7 +40,6 @@ namespace CharacterSystem.Managers
 			player = Player.Instance;
 		}
 
-		
 		private void OnEnable()
 		{
 			GameStateManager.OnStateChanged += HandleGameStateChanged;
@@ -62,7 +57,7 @@ namespace CharacterSystem.Managers
 				isGameOver = true;
 			}
 		}
-		
+
 		public void RegisterEnemy(EnemyMovementController movement, EnemyAttackController attack, Enemy enemy)
 		{
 			movementControllers.Add(movement);
@@ -118,6 +113,7 @@ namespace CharacterSystem.Managers
 		private void Update()
 		{
 			if (isGameOver) return;
+			if (GameManager.Instance.gameStateManager.CurrentState != GameState.Start) return;
 			if (movementControllers.Count == 0 || player == null) return;
 
 			for (int i = 0; i < movementControllers.Count; i++)
@@ -140,10 +136,7 @@ namespace CharacterSystem.Managers
 
 			JobHandle moveHandle = moveJob.Schedule(movementControllers.Count, 64);
 
-			var attackJob = new EnemyAttackJob
-			{
-				positions = positions, attackRanges = attackRanges, results = attackResults, target = playerPos
-			};
+			var attackJob = new EnemyAttackJob { positions = positions, attackRanges = attackRanges, results = attackResults, target = playerPos };
 
 			JobHandle attackHandle = attackJob.Schedule(movementControllers.Count, 64, moveHandle);
 			attackHandle.Complete();
