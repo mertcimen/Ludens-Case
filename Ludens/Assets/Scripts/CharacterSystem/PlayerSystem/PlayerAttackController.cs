@@ -1,5 +1,6 @@
 using System.Collections;
 using Containers;
+using DG.Tweening;
 using UnityEngine;
 using Utilities;
 using WeaponSystem;
@@ -51,13 +52,18 @@ namespace CharacterSystem.PlayerSystem
 		{
 			WaitForSeconds waitCheck = new WaitForSeconds(0.2f);
 
-			while (player.State == CharacterState.Idle)
+			while (player != null && player.State == CharacterState.Idle)
 			{
 				currentTarget = FindClosestEnemyInRange();
 
 				if (currentTarget != null)
 				{
+					Vector2 dir = (currentTarget.transform.position - transform.position).normalized;
+					float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+					transform.rotation = Quaternion.Euler(0f, 0f, angle-90);
+					
 					Shoot(currentTarget);
+
 					yield return new WaitForSeconds(1f / attackRate);
 				}
 				else

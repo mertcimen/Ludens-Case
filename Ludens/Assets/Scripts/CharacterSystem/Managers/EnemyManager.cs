@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using CharacterSystem.EnemySystem;
 using CharacterSystem.PlayerSystem;
+using Containers;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Jobs;
@@ -26,6 +27,12 @@ namespace CharacterSystem.Managers
 
 		private Player player;
 
+		
+		
+		
+		private bool isGameOver = false;
+
+		
 		private void Awake()
 		{
 			if (Instance != null && Instance != this) Destroy(gameObject);
@@ -37,6 +44,25 @@ namespace CharacterSystem.Managers
 			player = Player.Instance;
 		}
 
+		
+		private void OnEnable()
+		{
+			GameStateManager.OnStateChanged += HandleGameStateChanged;
+		}
+
+		private void OnDisable()
+		{
+			GameStateManager.OnStateChanged -= HandleGameStateChanged;
+		}
+
+		private void HandleGameStateChanged(GameState newState)
+		{
+			if (newState == GameState.Lose)
+			{
+				isGameOver = true;
+			}
+		}
+		
 		public void RegisterEnemy(EnemyMovementController movement, EnemyAttackController attack, Enemy enemy)
 		{
 			movementControllers.Add(movement);
@@ -91,6 +117,7 @@ namespace CharacterSystem.Managers
 
 		private void Update()
 		{
+			if (isGameOver) return;
 			if (movementControllers.Count == 0 || player == null) return;
 
 			for (int i = 0; i < movementControllers.Count; i++)

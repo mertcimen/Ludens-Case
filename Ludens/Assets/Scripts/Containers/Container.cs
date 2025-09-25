@@ -4,9 +4,9 @@ namespace Containers
 	public enum GameState
 	{
 		None,
-		OnStart,
-		OnLose,
-		OnWin
+		Start,
+		Lose,
+		Win
 		
 	}
 	

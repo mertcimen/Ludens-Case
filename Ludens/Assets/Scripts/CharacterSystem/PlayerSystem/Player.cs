@@ -1,3 +1,4 @@
+using CharacterSystem.Managers;
 using Containers;
 using UnityEngine;
 
@@ -46,7 +47,7 @@ namespace CharacterSystem.PlayerSystem
 
 		private void OnPlayerDied()
 		{
-			// Player özel ölüm davranışı
+			GameStateManager.Instance.CurrentState = GameState.Lose;
 		}
 	}
 }
